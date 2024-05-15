@@ -1,3 +1,23 @@
+
+@media only screen and (max-width:480px) {
+    @content;
+}
+
+
+@mixin tablet{
+    @media screen and (max-width:768px) {
+        @content;
+    }
+}
+
+@mixin laptop{
+    @media screen and (max-width:1200px) {
+        @content;
+    }
+}
+
+
+
 .home {
     background-color: #ffcaca;
     height: 100vh;
@@ -13,6 +33,10 @@
     height: 80vh;
     display: flex;
     overflow: hidden;
+
+    @media only screen and (max-width:768px){
+        width: 90%;
+    }
 }
 
 .sidebar {
@@ -35,6 +59,11 @@
 
 .logo{
     font-weight: bold;
+
+    @media only screen and (max-width:768px){
+        display: none;
+    }
+
 }
 
 .user{
@@ -55,6 +84,10 @@
     background-color: rgb(255,240,220);
     font-size: 10px;
     cursor: pointer;
+
+    @media only screen and (max-width:768px){
+      
+    }
 }
 
 
@@ -85,10 +118,22 @@
     height: 4vh;
     border-radius: 50%;
     object-fit: cover;
+    
+    @media only screen and (max-width: 600px){
+        width: 4vw;
+    }
+
+    @media only screen and (min-width:768px){
+        height: 4vh;
+        width: 6vw;
+    }
+
+    @media only screen and (max-width:1200px){
+      
+    }
 }
 
 .userChatInfo {
-
     align-items: center;
 }
 
@@ -100,4 +145,135 @@
 .userChatInfo p {
     font-size: 14px;
     color: grey;
+    margin: 0;
 }
+
+.chatInfo {
+    height: 5vh;
+    width: 44vw;
+    background-color: rgb(255, 235, 200);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1vh 1vw;
+
+    @media only screen and (max-width:768px){
+        width: 58vw;
+    }
+}
+
+.chatIcons {
+    display: flex;
+    gap: 1vh 0.5vw;
+}
+
+.chatIcons img {
+    height: 3vh;
+    width: 1.55vw;
+    cursor: pointer;
+
+    @media only screen and (max-width: 768px){
+        width:4vw; 
+    }
+}
+
+.messages {
+    background-color: rgb(255, 220, 210);
+    padding: 1vh 1vw;
+    height: 64vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.message {
+    display: flex;
+    gap: 2vh 2vw;
+    margin-bottom: 2vh;
+
+    &.owner{
+        flex-direction: row-reverse;
+
+        p {
+            background-color: rgb(129, 233, 129);
+            padding: 1vh 1vw;
+            border-radius: 1vh 0vh 1vh 1vh;
+            max-width: max-content;
+        }
+
+        .messageContent{
+            align-items: flex-end;
+        }
+    }
+}
+
+.messageInfo {
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    font-weight: 300;
+}
+
+.messageInfo img {
+    width: 2vw;
+    height: 4vh;
+    border-radius: 50%;
+    object-fit: cover;
+
+    @media only screen and (max-width:768px){
+        height: 4vh;
+        width: 6vw;
+    }
+}
+
+.messageContent {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh 1vw;
+}
+
+.messageContent img {
+    width: 50%;
+}
+
+.messageContent p {
+    background-color: white;
+    padding: 1vh 1vw;
+    border-radius: 0vh 1vh 1vh 1vh;
+    max-width: max-content;
+}
+
+.input {
+    background-color: rgb(255, 240, 220);
+    height: 5vh;
+    padding: 1vh 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input input {
+    width: 33vw;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+.send {
+    display: flex;
+    align-items: center;
+    gap: 1vh 1vw;
+}
+
+.send img {
+    height: 3vh;
+    cursor: pointer;
+}
+
+.send button {
+    border: none;
+    padding: 1vh 1.5vw;
+    color: white;
+    background-color: rgb(129, 233, 129);
+}
+
