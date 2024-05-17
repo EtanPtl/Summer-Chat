@@ -3,12 +3,16 @@ import { useState } from 'react';
 import './Register.css'
 import add from '../img/add-avatar.png'
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage } from "../Firebase.js"
+import { auth, storage, db } from "../Firebase.js"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore"; 
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
 
     const [err,setErr] = useState(false);
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const displayName = e.target[0].value;
@@ -23,29 +27,47 @@ const Register = () => {
 
             const uploadTask = uploadBytesResumable(storageRef, file);
 
+
             // Register three observers:
          
-            uploadTask.on('state_changed',
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+
+                },
                 (error) => {
                     setErr(true);
                 },
-                () => {  
-                    getDownloadURL(uploadTask.snapshot.ref).then( async(downloadURL) => {
-                        await updateProfile(res.user, {
-                            displayName,
-                            photoURL: downloadURL,
-                            
-                        })
+                async () => {
+
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    await updateProfile(res.user, {
+                        displayName: displayName,
+                        photoURL: downloadURL
                     });
-                }
-            );
 
-        
+                    navigate('/');
 
-        } catch(err){
-            setErr(true);
+
+                    await setDoc(doc(db, "users", res.user.uid), {
+                        uid: res.user.uid,
+                        displayName,
+                        email,
+                        photoURL: downloadURL,
+                    });
+
+                    await setDoc(doc(db, "userChats", res.user.uid), {});
+                 
+
+                });
+
         }
-    }
+        catch (err) {
+            setErr(true);
+        };      
+           
+        } 
+    
 
 
     return (
@@ -64,7 +86,7 @@ const Register = () => {
                     <button>Register</button>
                     {err && <span>Something went wrong</span>}
                 </form>
-                <p>You have an account? Login</p>
+                <p>You have an account? <Link to='/login'> Login </Link></p>
 
 
             </div>
